@@ -2,9 +2,12 @@ import { Prisma } from "@prisma/client"
 import { prismaClient } from "../prisma/client"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { ConflictError } from "../utils/errors/app.error";
+import bcrypt from 'bcrypt';
+import { serverConfig } from "../config";
 
 export const createUser = async (userPayload: Prisma.UserCreateInput) => {
     try {
+        userPayload.password = await bcrypt.hash(userPayload.password, serverConfig.SALT_ROUNDS);
         const user = await prismaClient.user.create({
             data: userPayload,
             select: {
