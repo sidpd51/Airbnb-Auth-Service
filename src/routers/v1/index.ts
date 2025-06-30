@@ -1,9 +1,9 @@
 import express from 'express';
-import bookingRouter from './booking';
+import userRouter from './user.router';
 
 const router = express.Router();
 
 
-router.use('/bookings', bookingRouter);
+router.use('/', userRouter);
 
 export default router;
