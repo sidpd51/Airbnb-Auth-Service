@@ -5,7 +5,10 @@
   "scripts": {
     "start": "ts-node dist/server.ts",
     "build": "tsc",
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon src/server.ts",
+    "create-migration": "prisma migrate dev --create-only --schema=./src/prisma/schema.prisma",
+    "prisma-migrate": "prisma migrate deploy --schema=./src/prisma/schema.prisma",
+    "prisma-generate": "prisma generate --schema=./src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
