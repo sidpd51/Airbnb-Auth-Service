@@ -4,6 +4,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { ConflictError, NotFoundError } from "../utils/errors/app.error";
 import bcrypt from 'bcrypt';
 import { serverConfig } from "../config";
+import { UUIDTypes } from "uuid";
 
 export const createUser = async (userPayload: Prisma.UserCreateInput) => {
     try {
@@ -40,6 +41,22 @@ export const getUserByEmail = async (email: string) => {
     });
     if (!user) {
         throw new NotFoundError(`User not found with email: ${email}`);
+    }
+    return user;
+}
+
+export const getUserById = async (id: UUIDTypes) => {
+    const user = await prismaClient.user.findUnique({
+        where: {
+            id: String(id)
+        },
+        select: {
+            name: true,
+            email: true
+        }
+    });
+    if (!user) {
+        throw new NotFoundError(`User not found with id: ${id}`);
     }
     return user;
 }

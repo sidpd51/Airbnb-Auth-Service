@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { createUser, getUserByEmail } from "../repositories/user.repository";
+import { createUser, getUserByEmail, getUserById } from "../repositories/user.repository";
 import bcrypt from 'bcrypt';
 import { LoginPaylodDTO } from "../dto/user.dto";
 import { UnauthorizedError } from "../utils/errors/app.error";
@@ -26,8 +26,12 @@ const comparePwd = (hashPwd: string, pwd: string) => {
     return bcrypt.compareSync(hashPwd, pwd);
 }
 
-
 const createJwtToken = (id: UUIDTypes) => {
     const token = jwt.sign({ id }, serverConfig.JWT_SECRET, { expiresIn: "1hr" });
     return token;
+}
+
+export const getUserByIdService = async(id: UUIDTypes)=>{
+    const user = await getUserById(id);
+    return user;
 }
