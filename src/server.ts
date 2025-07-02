@@ -12,7 +12,7 @@ app.use(express.json());
 const PORT: number = serverConfig.PORT;
 
 app.use(attachCorrelationIdMiddleware);
-app.use('/auth', router);
+app.use('/authservice/api/v1', router);
 app.use(appErrorHandler);
 
 app.listen(PORT, async () => {
